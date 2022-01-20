@@ -3,13 +3,13 @@
   <div class="mybody">
     <span class="mytitle">我的</span>
     <div class="content">
+      <div class="person" @click="goToOnlineResume">
 
-      <div class="person">
         <div class="imgdiv">
           <el-avatar :size="60"
                      src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
         </div>
-        <div class="namecss">{{apName}}</div>
+        <div class="namecss">{{this.userObject.apName}}</div>
         <div class="namecss2">应届毕业生/22岁/本科</div>
       </div>
       <div class="qiuzhi">
@@ -17,35 +17,24 @@
         <div class="qicon1">
           <van-icon name="manager-o"
                     size="2.5rem" />
-          <div>我的简历</div>
+          <div @click="goToOnlineResume()">我的简历</div>
         </div>
         <div class="qicon2">
           <van-icon name="bag-o"
                     size="2.5rem" />
           <div>职位收藏</div>
         </div>
-        <div class="qicon3">
+        <div class="qicon2">
           <van-icon name="label-o"
                     size="2.5rem" />
           <div>投递记录</div>
         </div>
-          <div class="qicon4">
+          <div class="qicon2">
           <van-icon name="chat-o"
                     size="2.5rem" />
           <div>意见反馈</div>
         </div>
       </div>
-      <!--
-<el-footer>
-   <div>
-        客服（投诉）电话：4006282835（工作日9:00-18:00)
-违法和不良信息举报、未成年人投诉举报渠道同上(投诉举报制度）
-客服邮箱：cc@lagou.com 北京市人社局电话：12333
-营业执照人力资源服务许可证增值电信业务经营许可证
-用戶协议隐私政策
-我
-      </div>
-</el-footer> -->
     </div>
     <mytabbar />
   </div>
@@ -61,7 +50,8 @@ export default {
   data () {
     // 这里存放数据
     return {
-      apName: '章三'
+      apName: '章三',
+      userObject: {}
     }
   },
   // 监听属性 类似于data概念
@@ -74,27 +64,43 @@ export default {
   },
   // 生命周期 - 挂载完成（可以访问DOM元素）
   mounted () {
-
+    setTimeout(() => {
+      this.userInfo()
+    }, 10)
   },
   beforeCreate () { }, // 生命周期 - 创建之前
-  beforeMount () { }, // 生命周期 - 挂载之前
+  beforeMount () {
+
+  }, // 生命周期 - 挂载之前
   beforeUpdate () { }, // 生命周期 - 更新之前
-  updated () { }, // 生命周期 - 更新之后
+  updated () {
+
+  }, // 生命周期 - 更新之后
   beforeDestroy () { }, // 生命周期 - 销毁之前
   destroyed () { }, // 生命周期 - 销毁完成
   activated () { }, // 如果页面有keep-alive缓存功能，这个函数会触发
   // 方法集合
   methods: {
-
+    userInfo () {
+      this.axios
+        .get('/api/user/info')
+        .then((res) => {
+          if (res.data.code === '000000') {
+            this.userObject = res.data.data
+          }
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    },
+    goToOnlineResume () {
+      this.$router.push({ name: 'OnlineResume' })
+    }
   }
 }
 
 </script>
 <style lang='less' scoped>
-body {
-  margin: 0;
-  padding: 0;
-}
 .qtitle{
   font-size: 1.2rem;
   margin-left: 1.4rem;
@@ -113,19 +119,7 @@ body {
 }
 .qicon2{
   float: left;
-  margin-left:2rem;
-    margin-top: 1rem;
-  text-align: center;
-}
-.qicon3{
-  float: left;
-  margin-left:2rem;
-    margin-top: 1rem;
-  text-align: center;
-}
-.qicon4{
-  float: left;
-  margin-left:2rem;
+  margin-left:3rem;
     margin-top: 1rem;
   text-align: center;
 }
@@ -176,16 +170,6 @@ body {
   border-radius: 0.4rem;
   margin-top: 1.8rem;
   text-align: left;
-}
-.van-nav-bar {
-  margin: 0;
-  padding: 0;
-  background: rgb(22, 167, 119);
-  // // 因为style标签上有 lang='less'  所以.van-nav-bar__title 可以嵌套到.van-nav-bar里面
-  // /* /deep/ 就是把data-v-hash值选择器写到类名的前面 */
-  /deep/ .van-nav-bar__title {
-    color: white;
-  }
 }
 
 .qiuzhi {

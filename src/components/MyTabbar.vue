@@ -1,7 +1,7 @@
 <template>
-  <van-tabbar v-model="active">
+  <van-tabbar route>
     <van-tabbar-item replace to="/home" icon="home-o">职位</van-tabbar-item>
-    <van-tabbar-item replace to="/message"  icon="chat-o">消息</van-tabbar-item>
+    <van-tabbar-item replace to="/mymessage"  icon="chat-o">消息</van-tabbar-item>
     <van-tabbar-item replace to="/myinfo"  icon="setting-o">我的</van-tabbar-item>
   </van-tabbar>
 </template>
@@ -17,7 +17,7 @@ export default {
   data () {
     // 这里存放数据
     return {
-      active: 0
+
     }
   },
   // 监听属性 类似于data概念

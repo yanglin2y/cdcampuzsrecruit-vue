@@ -1,11 +1,7 @@
 <!--  -->
 <template>
- <van-nav-bar
-  title="我的"
-  left-arrow
-  @click-left="onClickLeft"
-  @click-right="onClickRight"
-/>
+  <div class="bigBox">
+  </div>
 </template>
 
 <script>
@@ -18,7 +14,7 @@ export default {
   data () {
     // 这里存放数据
     return {
-
+      n: 1
     }
   },
   // 监听属性 类似于data概念
@@ -33,13 +29,13 @@ export default {
   mounted () {
 
   },
-  beforeCreate () {}, // 生命周期 - 创建之前
-  beforeMount () {}, // 生命周期 - 挂载之前
-  beforeUpdate () {}, // 生命周期 - 更新之前
-  updated () {}, // 生命周期 - 更新之后
-  beforeDestroy () {}, // 生命周期 - 销毁之前
-  destroyed () {}, // 生命周期 - 销毁完成
-  activated () {}, // 如果页面有keep-alive缓存功能，这个函数会触发
+  beforeCreate () { }, // 生命周期 - 创建之前
+  beforeMount () { }, // 生命周期 - 挂载之前
+  beforeUpdate () { }, // 生命周期 - 更新之前
+  updated () { }, // 生命周期 - 更新之后
+  beforeDestroy () { }, // 生命周期 - 销毁之前
+  destroyed () { }, // 生命周期 - 销毁完成
+  activated () { }, // 如果页面有keep-alive缓存功能，这个函数会触发
   // 方法集合
   methods: {
 
@@ -50,4 +46,10 @@ export default {
 <style lang='less' scoped>
 //@import url(); 引入公共css类
 
+.bigBox {
+  height: 100vh;
+  width: 100%;
+  background: white;
+  border-radius: 1rem;
+}
 </style>

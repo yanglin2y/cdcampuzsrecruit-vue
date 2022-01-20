@@ -1,48 +1,57 @@
 <!--  -->
 <template>
-  <el-form :model="userForm"
-           :rules="rules"
-           ref="userForm"
-           class="demo-ruleForm">
-    <el-form-item prop="apName">
-      <el-input type="text"
-                placeholder="真实姓名"
-                required="required"
-                v-model="userForm.apName"
-                prefix-icon="el-icon-user-solid"></el-input>
-    </el-form-item>
-    <el-form-item prop="account">
-      <el-input type="text"
-                placeholder="登陆账户"
-                required="required"
-                v-model="userForm.account"
-                prefix-icon="el-icon-user-solid"></el-input>
-    </el-form-item>
-    <el-form-item prop="password">
-      <el-input type="password"
-                placeholder="请输入密码"
-                v-model="userForm.password"
-                prefix-icon="el-icon-lock"></el-input>
-    </el-form-item>
-    <el-form-item prop="checkPass">
-      <el-input type="password"
-                placeholder="请再次输入密码"
-                v-model="userForm.checkPass"
-                prefix-icon="el-icon-lock"></el-input>
-    </el-form-item>
-    <el-form-item prop="iphone">
-      <el-input class="phone-input"
-                placeholder="手机号"
-                v-model="userForm.iphone"
-                prefix-icon="el-icon-mobile-phone"></el-input>
-    </el-form-item>
+  <div class="bigBox">
+    <van-sticky :offset-top="0.0001"
+                class="headerTitile">
+      <van-nav-bar title="用户注册">
+        <template #left>
+          <van-icon name="arrow-left"  size="26" @click="gotologin()"/>
+        </template>
+      </van-nav-bar>
+    </van-sticky>
+    <el-form :model="userForm"
+             :rules="rules"
+             ref="userForm"
+             class="login-container">
+      <el-form-item prop="apName">
+        <el-input type="text"
+                  placeholder="真实姓名"
+                  required="required"
+                  v-model="userForm.apName"
+                  prefix-icon="el-icon-user-solid"></el-input>
+      </el-form-item>
+      <el-form-item prop="account">
+        <el-input type="text"
+                  placeholder="登陆账户"
+                  required="required"
+                  v-model="userForm.account"
+                  prefix-icon="el-icon-user-solid"></el-input>
+      </el-form-item>
+      <el-form-item prop="password">
+        <el-input type="password"
+                  placeholder="请输入密码"
+                  v-model="userForm.password"
+                  prefix-icon="el-icon-lock"></el-input>
+      </el-form-item>
+      <el-form-item prop="checkPass">
+        <el-input type="password"
+                  placeholder="请再次输入密码"
+                  v-model="userForm.checkPass"
+                  prefix-icon="el-icon-lock"></el-input>
+      </el-form-item>
+      <el-form-item prop="iphone">
+        <el-input class="phone-input"
+                  placeholder="手机号"
+                  v-model="userForm.iphone"
+                  prefix-icon="el-icon-mobile-phone"></el-input>
+      </el-form-item>
       <el-form-item prop="mail">
-      <el-input class="phone-input"
-                placeholder="邮箱"
-                v-model="userForm.mail"
-                prefix-icon="el-icon-mobile-phone"></el-input>
-    </el-form-item>
-    <!-- <el-form-item prop="age">
+        <el-input class="phone-input"
+                  placeholder="邮箱"
+                  v-model="userForm.mail"
+                  prefix-icon="el-icon-mobile-phone"></el-input>
+      </el-form-item>
+      <!-- <el-form-item prop="age">
       <el-input placeholder="请输入年龄"
                 v-model.number="userForm.age"
                 prefix-icon="el-icon-coordinate"></el-input>
@@ -75,18 +84,19 @@
       <el-button type="primary"
                  @click="submitForm('userForm')">注册</el-button>
     </el-form-item> -->
-    <el-form-item class="btn-form">
-      <el-button type="primary"
-                 @click="submitForm('userForm')">注册</el-button>
-    </el-form-item>
-  </el-form>
+      <el-form-item class="btn-form">
+        <el-button type="primary"
+                   @click="submitForm('userForm')">注册</el-button>
+      </el-form-item>
+    </el-form>
+  </div>
 
 </template>
 
 <script>
 // 这里可以导入其他文件（比如：组件，工具js，第三方插件js，json文件，图片文件等等）
 // 例如：import 《组件名称》 from '《组件路径》'
-
+import utils from '../js/util.js'
 export default {
   // import引入的组件需要注入到对象中才能使用
   name: 'RegisterApUser',
@@ -112,8 +122,8 @@ export default {
         return callback(new Error('电话号码不能为空'))
       }
       setTimeout(() => {
-      // Number.isInteger是es6验证数字是否为整数的方法,但是我实际用的时候输入的数字总是识别成字符串
-      // 所以我就在前面加了一个+实现隐式转换
+        // Number.isInteger是es6验证数字是否为整数的方法,但是我实际用的时候输入的数字总是识别成字符串
+        // 所以我就在前面加了一个+实现隐式转换
 
         if (!Number.isInteger(+value)) {
           callback(new Error('请输入数字值'))
@@ -193,12 +203,12 @@ export default {
     }
     return {
       rules: {
-        sex: [{validator: validateSex, trigger: 'blur'}],
-        birthday: [{validator: validateBirthday, trigger: 'blur'}],
-        mail: [{validator: validateEmail, trigger: 'blur'}],
-        iphone: [{validator: validateIphone, trigger: 'blur'}],
-        account: [{validator: validateAccount, trigger: 'blur'}],
-        apName: [{validator: validateName, trigger: 'blur'}],
+        sex: [{ validator: validateSex, trigger: 'blur' }],
+        birthday: [{ validator: validateBirthday, trigger: 'blur' }],
+        mail: [{ validator: validateEmail, trigger: 'blur' }],
+        iphone: [{ validator: validateIphone, trigger: 'blur' }],
+        account: [{ validator: validateAccount, trigger: 'blur' }],
+        apName: [{ validator: validateName, trigger: 'blur' }],
         password: [{ validator: validatePassword, trigger: 'blur' }],
         checkPass: [{ validator: validatePass2, trigger: 'blur' }],
         age: [{ validator: checkAge, trigger: 'blur' }]
@@ -241,21 +251,26 @@ export default {
   activated () { }, // 如果页面有keep-alive缓存功能，这个函数会触发
   // 方法集合
   methods: {
+    gotologin () {
+      this.$router.push({path: '/user/login'})
+    },
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.userForm.password = this.myuitls.encrypt(this.password)
+          this.userForm.password = utils.encrypt(this.userForm.password)
           this.axios
             .post('/api/user/registerAPUser', this.qs.stringify(this.userForm))
             .then((res) => {
               if (res.data.code === '111111') {
                 this.userForm.password = this.userForm.checkPass
-                this.$message(res.data.message)
+                this.$notify({ type: 'warning', message: res.data.message })
               } else if (res.data.code === '000000') {
-                this.$message(res.data.message)
-                this.$router.push({path: '/login'})
+                this.userForm.password = this.userForm.checkPass
+                this.$notify({ type: 'success', message: res.data.message })
+                this.$router.push({ path: '/user/login' })
               } else {
-                this.$message('服务繁忙, 请重试')
+                this.userForm.password = this.userForm.checkPass
+                this.$notify({ type: 'warning', message: '服务繁忙, 请重试' })
               }
             })
             .catch(function (error) {
@@ -270,3 +285,16 @@ export default {
   }
 }
 </script>
+<style lang='less' scoped>
+.bigBox {
+  height: 100vh;
+  width: 100%;
+  background: white;
+  position: absolute;
+}
+.login-container {
+  margin-top: 1rem;
+  width: 80%;
+  margin-left: 3rem;
+}
+</style>
