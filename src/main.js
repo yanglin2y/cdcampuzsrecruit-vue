@@ -5,13 +5,15 @@ import App from './App'
 import router from './router'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-import { Notify, Tabbar, TabbarItem, NavBar, Icon, Search, Tab, Tabs, List, Sticky, PullRefresh, Divider, Form, Field } from 'vant'
+import { Notify, Tabbar, TabbarItem, NavBar, Icon, Search, Tab, Tabs, List, Sticky, PullRefresh, Divider, Form, Field, Image as VanImage } from 'vant'
 import Router from 'vue-router'
 import Vuex from 'vuex'
 import axios from 'axios'
 import Qs from 'qs'
 import myuitls from './js/util'
 import less from 'less'
+import store from './vuex/store.js'
+Vue.use(VanImage)
 
 Vue.use(Divider)
 Vue.use(Notify)
@@ -30,6 +32,7 @@ Vue.config.productionTip = false
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })

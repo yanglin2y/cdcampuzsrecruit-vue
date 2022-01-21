@@ -12,45 +12,69 @@
           <li :class="n==3?'active':''"
               @click="n=3">通过初筛</li>
           <li :class="n==4?'active':''"
-              @click="n=4">已通过</li>
+              @click="n=4">不合适</li>
         </ul>
       </div>
 
       <!-- neirong -->
       <div class="tab_con">
-        <div v-show="n==1">内容一</div>
-        <div v-show="n==2">内容二</div>
-        <div v-show="n==3">内容三</div>
-        <div v-show="n==4">内容四</div>
+        <div v-show="n==1" class="waitsee">
+          <resume-item v-for="(n, inx) in waitForm" :key="inx" :itemObj="n"></resume-item>
+        </div>
+        <div v-show="n==2">
+          <resume-item v-for="(n, inx) in watchForm" :key="inx" :itemObj="n"></resume-item>
+        </div>
+        <div v-show="n==3">
+          <resume-item v-for="(n, inx) in passForm" :key="inx" :itemObj="n"></resume-item>
+        </div>
+        <div v-show="n==4">
+          <resume-item v-for="(n, inx) in nopassForm" :key="inx" :itemObj="n"></resume-item>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import ResumeItem from './Resume_Item.vue'
 // 这里可以导入其他文件（比如：组件，工具js，第三方插件js，json文件，图片文件等等）
 // 例如：import 《组件名称》 from '《组件路径》'
 
 export default {
   // import引入的组件需要注入到对象中才能使用
-  components: {},
+  components: {ResumeItem},
   data () {
     // 这里存放数据
     return {
-      n: 1
+      n: this.$store.state.n,
+      waitForm: [],
+      watchForm: [],
+      passForm: [],
+      nopassForm: []
     }
   },
   // 监听属性 类似于data概念
   computed: {},
   // 监控data中的数据变化
-  watch: {},
+  watch: {
+    'n': {
+      handler (newValue, oldValue) {
+        this.$store.commit('savetoudi', newValue)
+      }
+    }
+  },
   // 生命周期 - 创建完成（可以访问当前this实例）
   created () {
 
   },
   // 生命周期 - 挂载完成（可以访问DOM元素）
   mounted () {
-
+    setTimeout(() => {
+      this.selectAPResumeByUid(0, this.waitForm)
+      this.selectAPResumeByUid(1, this.watchForm)
+      this.selectAPResumeByUid(2, this.passForm)
+      this.selectAPResumeByUid(3, this.nopassForm)
+    }, 100)
   },
   beforeCreate () { }, // 生命周期 - 创建之前
   beforeMount () { }, // 生命周期 - 挂载之前
@@ -61,6 +85,24 @@ export default {
   activated () { }, // 如果页面有keep-alive缓存功能，这个函数会触发
   // 方法集合
   methods: {
+    selectAPResumeByUid (state, data) {
+      this.axios
+        .get('/api/resume/selectAPResumeByUid', {params: {state: state}})
+        .then((res) => {
+          if (res.data.code === '000000') {
+            for (var i in res.data.data) {
+              data.push(res.data.data[i])
+            }
+          } else if (res.data.code === '111111') {
+            this.$message(res.data.message)
+          } else {
+            this.$message('服务繁忙, 请重试')
+          }
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    }
 
   }
 }
@@ -68,7 +110,11 @@ export default {
 </script>
 <style lang='less' scoped>
 //@import url(); 引入公共css类
+.waitsee{
+  overflow-y: auto;
+  height: 82vh;
 
+}
 .bigBox {
   height: 100vh;
   width: 100%;

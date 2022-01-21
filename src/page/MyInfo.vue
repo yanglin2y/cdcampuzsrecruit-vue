@@ -9,8 +9,8 @@
           <el-avatar :size="60"
                      src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
         </div>
-        <div class="namecss">{{this.userObject.apName}}</div>
-        <div class="namecss2">应届毕业生/22岁/本科</div>
+        <div class="namecss">{{userObject.apName}}</div>
+        <div class="namecss2">{{sex}}/{{age}}岁/{{education}}</div>
       </div>
       <div class="qiuzhi">
         <div class="qtitle"> 求职必备</div>
@@ -50,8 +50,11 @@ export default {
   data () {
     // 这里存放数据
     return {
-      apName: '章三',
-      userObject: {}
+      userObject: {},
+      age: '',
+      education: '',
+      sex: '',
+      edList: []
     }
   },
   // 监听属性 类似于data概念
@@ -66,7 +69,8 @@ export default {
   mounted () {
     setTimeout(() => {
       this.userInfo()
-    }, 10)
+      this.selectEducationInfoList()
+    }, 100)
   },
   beforeCreate () { }, // 生命周期 - 创建之前
   beforeMount () {
@@ -81,12 +85,19 @@ export default {
   activated () { }, // 如果页面有keep-alive缓存功能，这个函数会触发
   // 方法集合
   methods: {
+    getAge (val) {
+      var r = val.match(/^(\d{1,4})(-|\/)(\d{1,2})\2(\d{1,2})$/)
+      if (r == null) return false
+      var Y = new Date().getFullYear()
+      this.age = Y - r[1]
+    },
     userInfo () {
       this.axios
         .get('/api/user/info')
         .then((res) => {
           if (res.data.code === '000000') {
             this.userObject = res.data.data
+            this.getAge(this.userObject.birthday)
           }
         })
         .catch(function (error) {
@@ -95,6 +106,48 @@ export default {
     },
     goToOnlineResume () {
       this.$router.push({ name: 'OnlineResume' })
+    },
+    selectEducationInfoList () {
+      this.axios
+        .get('/api/myinfo/selectEducationInfoList')
+        .then((res) => {
+          if (res.data.code === '000000') {
+            for (var i in res.data.data) {
+              this.edList.push(res.data.data[i])
+            }
+            this.showEducation()
+          } else if (res.data.code === '111111') {
+            this.$message(res.data.message)
+          } else {
+            this.$message('服务繁忙, 请重试')
+          }
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    },
+    showEducation () {
+      var max = 0
+      for (let k in this.edList) {
+        if (this.edList[k].education > max) {
+          max = this.edList[k].education
+        }
+      }
+
+      if (max === 1) {
+        this.education = '专科'
+      } else if (max === 2) {
+        this.education = '本科'
+      } else if (max === 3) {
+        this.education = '硕士'
+      } else if (max === 4) {
+        this.education = '博士'
+      }
+      if (this.userObject.sex === 1) {
+        this.sex = '男'
+      } else {
+        this.sex = '女'
+      }
     }
   }
 }
@@ -175,7 +228,7 @@ export default {
 .qiuzhi {
   background: white;
   height: 9rem;
-  width: 96%;
+  width: 100%;
   margin-top: 1rem;
    border-radius: 0.4rem;
   text-align: left;

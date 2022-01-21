@@ -13,6 +13,7 @@ import UpdateEducationInfo from '../page/Update_EducationInfo.vue'
 import UpdateExperienceInfo from '../page/Updata_ExperienceInfo.vue'
 import UpdateProjectInfo from '../page/Updata_ProjectInfo.vue'
 import personinfo from '../page/PersonInfo.vue'
+import showtoudi from '../page/Show_Toudi.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -38,7 +39,10 @@ export default new Router({
     }, {
       path: '/mymessage',
       name: 'mymessage',
-      component: mymessage
+      component: mymessage,
+      meta: {
+        keepAlive: true
+      }
     }, {
       path: '/onlineResume',
       name: 'OnlineResume',
@@ -71,6 +75,11 @@ export default new Router({
       path: '/personinfo',
       name: 'personinfo',
       component: personinfo
+
+    }, {
+      path: '/showtoudi',
+      name: 'showtoudi',
+      component: showtoudi
 
     }
 

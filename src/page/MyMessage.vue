@@ -11,9 +11,11 @@
         <van-tab title-style="color:white;font-size:1.4rem" title="我的消息" name="message">
             <message/>
         </van-tab>
+        <keep-alive>
         <van-tab title-style="color:white;font-size:1.4rem" title="我的投递" name="toudi">
           <toudi></toudi>
         </van-tab>
+        </keep-alive>
       </van-tabs>
          <mytabbar />
       </van-sticky>
@@ -34,14 +36,19 @@ export default {
   data () {
     // 这里存放数据
     return {
-      n: 1,
-      activeName: 'message'
+      activeName: this.$store.state.activeName
     }
   },
   // 监听属性 类似于data概念
   computed: {},
   // 监控data中的数据变化
-  watch: {},
+  watch: {
+    'activeName': {
+      handler (newValue, oldValue) {
+        this.$store.commit('save', newValue)
+      }
+    }
+  },
   // 生命周期 - 创建完成（可以访问当前this实例）
   created () {},
   // 生命周期 - 挂载完成（可以访问DOM元素）

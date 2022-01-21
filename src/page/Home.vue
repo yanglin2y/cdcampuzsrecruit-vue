@@ -112,7 +112,7 @@ export default {
         if (this.list.length !== 0 && this.total !== 0 && this.list.length >= this.total) {
           this.finished = true
         }
-      }, 1600)
+      }, 1500)
     },
     onRefresh () {
     // 清空列表数据
