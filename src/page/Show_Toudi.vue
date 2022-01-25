@@ -100,7 +100,7 @@ export default {
         })
     },
     goEntInfo () {
-      this.$router.push({
+      this.$router.replace({
         name: 'showjob',
         params: {
           itemObj: this.rpInfo

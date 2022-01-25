@@ -1,10 +1,10 @@
 <template>
-  <div class="loginbody">
+  <div class="loginbody" >
     <van-sticky :offset-top="0.0001"
                 class="headerTitile">
       <van-nav-bar title="长大直聘登陆">
         <template #left>
-          <van-icon name="wap-home-o"
+          <van-icon name="wap-home-o" @click="gotoHome"
                     size="30" />
         </template>
       </van-nav-bar>
@@ -27,10 +27,11 @@
                   v-model="userForm.password"
                   prefix-icon="el-icon-lock"></el-input>
       </el-form-item>
-      <el-form-item>
+      <el-form-item  >
         <el-button type="primary"
                    style="width: 100%"
-                   @click="submitForm('userForm')">提交</el-button>
+                   @click="login('userForm')"
+                   >提交</el-button>
       </el-form-item>
       <el-row style="text-align: left; margin-top: -10px ;">
         <el-link type="primary">忘记密码</el-link>
@@ -41,7 +42,7 @@
     </el-form>
   </div>
 
-</template>ç
+</template>
 
 <script>
 import utils from '../js/util.js'
@@ -77,11 +78,27 @@ export default {
       }
     }
   },
+  mounted () {
+    // 绑定事件
+    window.addEventListener('keydown', this.keyDown)
+  },
+  destroyed () {
+    window.removeEventListener('keydown', this.keyDown, false)
+  },
   methods: {
+    keyDown (e) {
+      // 如果是回车则执行登录方法
+      if (e.keyCode === 13) {
+        this.login('userForm')
+      }
+    },
+    gotoHome () {
+      this.$router.push({path: '/home'})
+    },
     doRegister () {
       this.$router.push({path: '/user/register'})
     },
-    submitForm (formName) {
+    login (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.userForm.password = utils.encrypt(this.userForm.password)

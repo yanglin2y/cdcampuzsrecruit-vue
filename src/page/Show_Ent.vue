@@ -216,6 +216,7 @@ button[disabled] {
   background: white;
   height: 100vh;
   width: 100%;
+    overflow:hidden
 }
 .content {
   display: flex;

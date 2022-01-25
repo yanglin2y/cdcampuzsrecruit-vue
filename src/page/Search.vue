@@ -1,49 +1,33 @@
 <!--  -->
 <template>
   <div class="mybody">
-    <van-sticky :offset-top="0.0001">
-      <van-nav-bar title="长大招聘"> </van-nav-bar>
-      <van-search
-        @click="gotoSearch"
+   <van-sticky :offset-top="0.0001" class="headerTitile">
+      <van-nav-bar title="搜索">
+        <template #left>
+          <van-icon name="arrow-left" color="white" size="24" @click="goto()" />
+        </template>
+      </van-nav-bar>
+           <van-search
         class="searchbar"
         v-model="searchValue"
-        placeholder="请输入搜索关键词"
+        placeholder="请输入职位、地点、公司"
         background="rgb(22, 167, 119) "
+        @keydown.enter="keypush()"
       />
-      <div class="qiuzhi">
-        <div class="qicon1">
-          <van-icon name="diamond" size="1.8rem" />
-          <div>职位推荐</div>
-        </div>
-        <div class="qicon2">
-          <van-icon name="cart" size="1.8rem" />
-          <div @click="goToCollection">职位收藏</div>
-        </div>
-        <div class="qicon2">
-          <van-icon name="underway" size="1.8rem" />
-          <div @click="goToDeliveryRecord">投递记录</div>
-        </div>
-        <div class="qicon2" @click="seviceInfo()">
-          <van-icon name="label" size="1.8rem" />
-          <div>服务公告</div>
-        </div>
-      </div>
     </van-sticky>
     <div class="messageBox">
-      <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
-        <van-list
-          v-model="loading"
-          :finished="finished"
-          :immediate-check="true"
-          :offset="3"
-          finished-text="没有更多了"
-          @load="onLoad"
-        >
-          <jobitem v-for="(n, inx) in list" :key="inx" :itemObj="n"></jobitem>
-        </van-list>
-      </van-pull-refresh>
+      <van-list
+      class="vlist"
+        v-model="loading"
+        :finished="finished"
+        :immediate-check="false"
+        :offset="1"
+        finished-text="没有更多了"
+        @load="onLoad"
+      >
+        <jobitem v-for="(n, inx) in list" :key="inx" :itemObj="n"></jobitem>
+      </van-list>
     </div>
-    <mytabbar />
   </div>
 </template>
 
@@ -77,18 +61,24 @@ export default {
   mounted () {},
   // 方法集合
   methods: {
-    gotoSearch () {
-      this.$router.push('/search')
+    keypush () {
+      this.list = []
+      this.finished = false
+      this.current = 1
+      // 重新加载数据
+      // 将 loading 设置为 true，表示处于加载状态
+      this.loading = true
+      this.onLoad()
     },
     seviceInfo () {
       this.$dialog.alert({
         message: '暂无公告'
       })
     },
-    selectAllPositionByPage () {
+    selctPostionByCondition () {
       this.axios
-        .get('/api/position/selectAllPositionByPage', {
-          params: { current: this.current, size: this.size }
+        .get('/api/position/selctPostionByCondition', {
+          params: { current: this.current, size: this.size, math: this.searchValue }
         })
         .then((res) => {
           if (res.data.code === '000000') {
@@ -115,7 +105,7 @@ export default {
           this.refreshing = false
         }
 
-        this.selectAllPositionByPage()
+        this.selctPostionByCondition()
         this.loading = false
         if (
           this.list.length !== 0 &&
@@ -135,76 +125,31 @@ export default {
       this.loading = true
       this.onLoad()
     },
-    goToDeliveryRecord () {
-      this.$router.push({
-        name: 'deliveryRecord'
-      })
-    },
-    goToCollection () {
-      this.$router.push({
-        name: 'positionCollection'
-      })
+    goto () {
+      this.$router.push('/home')
     }
   }
 }
 </script>
 <style lang="less" scoped>
-/deep/ .van-pull-refresh {
-  height: 73vh;
-  overflow-y: scroll;
+.vlist{
+  height: 87vh;
+ overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
 }
-.qicon1 {
-  float: left;
-  margin-left: 3rem;
-  margin-top: 0.4rem;
-  text-align: center;
-  height: 4rem;
-  width: 4rem;
+.messageBox{
+  height: 87vh;
+  margin-top: .1rem;
 }
-.qicon2 {
-  float: left;
-  margin-left: 3rem;
-  margin-top: 0.4rem;
-  text-align: center;
-}
-.qiuzhi {
-  background: white;
-  height: 4.2rem;
+.mybody{
+  height: 100vh;
   width: 100%;
-  border-radius: 0.4rem;
-  text-align: left;
+  background: white;
 }
 /deep/ .van-nav-bar__title {
   color: white !important;
-  font-size: 1.7rem;
-  margin-left: 1rem;
-  margin-top: 1rem;
-}
-.van-list {
-  background: white;
-}
-.messageBox {
-  background: white;
-  height: 77vh;
-
-  margin-top: 0.1rem;
-}
-.mybody {
-  height: 100vh;
-  width: 100%;
-}
-.areaUl {
-  margin-top: 0.4rem;
-}
-.areaUl li {
-  float: left;
-  margin-left: 0.2rem;
-  background: #f2f3f5;
-  padding: 0.02rem 0.7rem;
-  color: #666;
-  font-size: 0.1rem;
-  border-radius: 0.2rem 0.2rem 0.2rem 0.2rem;
+  font-size: 1.4rem;
+  border: 0px;
 }
 .van-nav-bar {
   background-color: #16a777;

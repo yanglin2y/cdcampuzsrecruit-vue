@@ -19,6 +19,7 @@ import deliveryRecord from '../page/Delivery_Record.vue'
 import positionCollection from '../page/Position_Collection.vue'
 import showEnt from '../page/Show_Ent.vue'
 import showHR from '../page/Show_Hr.vue'
+import search from '../page/Search.vue'
 Vue.use(Router)
 
 const router = new Router({
@@ -55,10 +56,7 @@ const router = new Router({
     }, {
       path: '/mymessage',
       name: 'mymessage',
-      component: mymessage,
-      meta: {
-        keepAlive: true
-      }
+      component: mymessage
     }, {
       path: '/onlineResume',
       name: 'OnlineResume',
@@ -96,7 +94,6 @@ const router = new Router({
       path: '/showtoudi',
       name: 'showtoudi',
       component: showtoudi
-
     },
     {
       path: '/showjob',
@@ -124,6 +121,11 @@ const router = new Router({
       path: '/showHR',
       name: 'showHR',
       component: showHR
+    },
+    {
+      path: '/search',
+      name: 'search',
+      component: search
     }
 
   ]
