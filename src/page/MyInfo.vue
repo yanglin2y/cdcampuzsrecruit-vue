@@ -36,6 +36,7 @@
         </div>
       </div>
     </div>
+    <van-button class="logout" type="danger" @click="logout" >退出登陆</van-button>
     <mytabbar />
   </div>
 </template>
@@ -85,6 +86,19 @@ export default {
   activated () { }, // 如果页面有keep-alive缓存功能，这个函数会触发
   // 方法集合
   methods: {
+    logout () {
+      this.axios
+        .get('/api/user/logout')
+        .then((res) => {
+          if (res.data.code === '000000') {
+            this.$notify({ type: 'success', message: '退出成功' })
+            this.$router.push('/home')
+          }
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    },
     getAge (val) {
       var r = val.match(/^(\d{1,4})(-|\/)(\d{1,2})\2(\d{1,2})$/)
       if (r == null) return false
@@ -162,6 +176,13 @@ export default {
 
 </script>
 <style lang='less' scoped>
+
+.logout{
+  margin-top:30rem;
+  height: 3rem;
+  width: 40%;
+  font-size: 1.5rem;
+}
 .qtitle{
   font-size: 1.2rem;
   margin-left: 1.4rem;
