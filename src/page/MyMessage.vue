@@ -11,11 +11,9 @@
         <van-tab title-style="color:white;font-size:1.4rem" title="我的消息" name="message">
             <message/>
         </van-tab>
-        <keep-alive>
         <van-tab title-style="color:white;font-size:1.4rem" title="我的投递" name="toudi">
           <toudi></toudi>
         </van-tab>
-        </keep-alive>
       </van-tabs>
          <mytabbar />
       </van-sticky>

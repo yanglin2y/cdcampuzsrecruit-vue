@@ -75,9 +75,9 @@ white-space:nowrap
   display: flex;
   width: 100%;
   height: 6rem;
-  border-bottom: 1px solid rgb(180, 178, 178);
+  border-bottom: 1px solid rgb(238, 236, 236);
   flex-wrap: nowrap;
-  flex: co;
+  flex: columns;
 
 }
 

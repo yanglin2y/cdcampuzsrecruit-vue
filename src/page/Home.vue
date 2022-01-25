@@ -17,13 +17,13 @@
         </div>
         <div class="qicon2">
           <van-icon name="cart" size="1.8rem" />
-          <div>职位收藏</div>
+          <div @click="goToCollection">职位收藏</div>
         </div>
         <div class="qicon2">
           <van-icon name="underway" size="1.8rem" />
-          <div>投递记录</div>
+          <div @click="goToDeliveryRecord">投递记录</div>
         </div>
-        <div class="qicon2">
+        <div class="qicon2" @click="seviceInfo()">
           <van-icon name="label" size="1.8rem" />
           <div>服务公告</div>
         </div>
@@ -35,7 +35,7 @@
           v-model="loading"
           :finished="finished"
           :immediate-check="true"
-          :offset="1"
+          :offset="3"
           finished-text="没有更多了"
           @load="onLoad"
         >
@@ -76,9 +76,15 @@ export default {
   },
   // 生命周期 - 挂载完成（可以访问DOM元素）
   mounted () {
+
   },
   // 方法集合
   methods: {
+    seviceInfo () {
+      this.$dialog.alert({
+        message: '暂无公告'
+      })
+    },
     selectAllPositionByPage () {
       this.axios
         .get('/api/position/selectAllPositionByPage', {params: {current: this.current, size: this.size}})
@@ -87,7 +93,6 @@ export default {
             for (var i in res.data.data.records) {
               this.list.push(res.data.data.records[i])
             }
-            //  this.list[0].push(res.data.data.records)
             this.total = res.data.data.total
             this.current = this.current + 1
           } else if (res.data.code === '111111') {
@@ -112,7 +117,7 @@ export default {
         if (this.list.length !== 0 && this.total !== 0 && this.list.length >= this.total) {
           this.finished = true
         }
-      }, 1500)
+      }, 1100)
     },
     onRefresh () {
     // 清空列表数据
@@ -122,6 +127,16 @@ export default {
       // 将 loading 设置为 true，表示处于加载状态
       this.loading = true
       this.onLoad()
+    },
+    goToDeliveryRecord () {
+      this.$router.push({
+        name: 'deliveryRecord'
+      })
+    },
+    goToCollection () {
+      this.$router.push({
+        name: 'positionCollection'
+      })
     }
   }
 }

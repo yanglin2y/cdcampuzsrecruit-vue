@@ -30,7 +30,7 @@ export default {
   methods: {
     showMsg () {
       this.$router.push({
-        name: 'show_msg',
+        name: 'showjob',
         params: {
           itemObj: this.itemObj
         }

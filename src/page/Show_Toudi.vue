@@ -8,13 +8,13 @@
         </template>
       </van-nav-bar>
     </van-sticky>
-    <div class="content">
+    <div class="content" @click="goEntInfo()">
       <div class="message">{{this.message}}</div>
       <div class="time">{{this.$route.params.itemObj.createTime.replaceAll('-','/')}}</div>
       <div class="intercontent">
         <div class="box">
           <div class="rpname">{{this.$route.params.itemObj.rpName}}</div>
-          <div class="allname"><span style="white-space:nowrap">{{this.$route.params.itemObj.entName}}｜{{this.$route.params.itemObj.wo}} ｜{{this.$route.params.itemObj.education}} ｜ {{this.$route.params.itemObj.experience}}</span></div>
+          <div class="allname"><span style="white-space:nowrap">{{this.$route.params.itemObj.entName}}｜{{this.$route.params.itemObj.workAddress}}｜{{this.$route.params.itemObj.education}}｜{{this.$route.params.itemObj.experience}}</span></div>
           <div class="salary">{{salaryList[0]}}K-{{salaryList[1]}}K</div>
         </div>
         <div class="img">
@@ -39,7 +39,8 @@ export default {
     return {
       salaryList: this.$route.params.itemObj.salary.split('-'),
       message: '',
-      n: this.$store.state.n
+      n: this.$store.state.n,
+      rpInfo: {}
     }
   },
   // 监听属性 类似于data概念
@@ -65,7 +66,11 @@ export default {
   // 生命周期 - 创建完成（可以访问当前this实例）
   created () {},
   // 生命周期 - 挂载完成（可以访问DOM元素）
-  mounted () {},
+  mounted () {
+    setTimeout(() => {
+      this.selectPostion()
+    }, 100)
+  },
   beforeCreate () {}, // 生命周期 - 创建之前
   beforeMount () {}, // 生命周期 - 挂载之前
   beforeUpdate () {}, // 生命周期 - 更新之前
@@ -77,6 +82,30 @@ export default {
   methods: {
     goto () {
       this.$router.back()
+    },
+    selectPostion () {
+      this.axios
+        .get('/api/position/selectPostionById', {
+          params: { id: this.$route.params.itemObj.rpid }
+        })
+        .then((res) => {
+          if (res.data.code === '000000') {
+            this.rpInfo = res.data.data
+          } else if (res.data.code === '111111') {
+            this.$notify({ type: 'warning', message: res.data.message })
+          }
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    },
+    goEntInfo () {
+      this.$router.push({
+        name: 'showjob',
+        params: {
+          itemObj: this.rpInfo
+        }
+      })
     }
   }
 }
@@ -136,19 +165,19 @@ export default {
      color: white;
 }
 .rpname {
-  margin-left: 1.4rem;
+  margin-left: .8rem;
   margin-top: 0.7rem;
   display: flex;
   font-weight: bold;
   font-size: 1.5rem;
 }
 .allname {
-   margin-left: 1.4rem;
+  margin-left: .8rem;
   display: flex;
   font-size: .2rem;
 }
 .salary {
-  margin-left: 1.4rem;
+  margin-left: .8rem;
   display: flex;
     color: #18bb85;;
   font-weight: bold;
@@ -156,7 +185,7 @@ export default {
 .img {
   flex: auto;
   text-align: right;
-  margin-top: 0.8rem;
+  margin-top: 1rem;
   margin-right: .7rem;
 }
 </style>

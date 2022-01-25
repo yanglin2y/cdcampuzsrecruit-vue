@@ -10,7 +10,7 @@
                      src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
         </div>
         <div class="namecss">{{userObject.apName}}</div>
-        <div class="namecss2">{{sex}}/{{age}}岁/{{education}}</div>
+        <div class="namecss2">{{sex}}/{{age}}/{{education}}</div>
       </div>
       <div class="qiuzhi">
         <div class="qtitle"> 求职必备</div>
@@ -19,7 +19,7 @@
                     size="2.5rem" />
           <div @click="goToOnlineResume()">我的简历</div>
         </div>
-        <div class="qicon2">
+        <div class="qicon2" @click="goToCollection">
           <van-icon name="bag-o"
                     size="2.5rem" />
           <div>职位收藏</div>
@@ -27,7 +27,7 @@
         <div class="qicon2">
           <van-icon name="label-o"
                     size="2.5rem" />
-          <div>投递记录</div>
+          <div @click="goToDeliveryRecord">投递记录</div>
         </div>
           <div class="qicon2">
           <van-icon name="chat-o"
@@ -70,7 +70,7 @@ export default {
     setTimeout(() => {
       this.userInfo()
       this.selectEducationInfoList()
-    }, 100)
+    }, 50)
   },
   beforeCreate () { }, // 生命周期 - 创建之前
   beforeMount () {
@@ -89,7 +89,7 @@ export default {
       var r = val.match(/^(\d{1,4})(-|\/)(\d{1,2})\2(\d{1,2})$/)
       if (r == null) return false
       var Y = new Date().getFullYear()
-      this.age = Y - r[1]
+      this.age = Y - r[1] + '岁'
     },
     userInfo () {
       this.axios
@@ -106,6 +106,9 @@ export default {
     },
     goToOnlineResume () {
       this.$router.push({ name: 'OnlineResume' })
+    },
+    goToCollection () {
+      this.$router.push({ name: 'positionCollection' })
     },
     selectEducationInfoList () {
       this.axios
@@ -148,6 +151,11 @@ export default {
       } else {
         this.sex = '女'
       }
+    },
+    goToDeliveryRecord () {
+      this.$router.push({
+        path: 'deliveryRecord'
+      })
     }
   }
 }

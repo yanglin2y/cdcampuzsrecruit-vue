@@ -14,11 +14,24 @@ import UpdateExperienceInfo from '../page/Updata_ExperienceInfo.vue'
 import UpdateProjectInfo from '../page/Updata_ProjectInfo.vue'
 import personinfo from '../page/PersonInfo.vue'
 import showtoudi from '../page/Show_Toudi.vue'
+import showjob from '../page/Show_Job.vue'
+import deliveryRecord from '../page/Delivery_Record.vue'
+import positionCollection from '../page/Position_Collection.vue'
+import showEnt from '../page/Show_Ent.vue'
+import showHR from '../page/Show_Hr.vue'
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   routes: [
+    {
+      path: '/',
+      name: 'Home',
+      component: Home,
+      meta: {
+        keepAlive: true // 需要缓存
+      }
+    },
     {
       path: '/user/login',
       name: 'Login',
@@ -35,7 +48,10 @@ export default new Router({
     }, {
       path: '/home',
       name: 'Home',
-      component: Home
+      component: Home,
+      meta: {
+        keepAlive: true // 需要缓存
+      }
     }, {
       path: '/mymessage',
       name: 'mymessage',
@@ -81,7 +97,45 @@ export default new Router({
       name: 'showtoudi',
       component: showtoudi
 
+    },
+    {
+      path: '/showjob',
+      name: 'showjob',
+      component: showjob
+
+    },
+    {
+      path: '/deliveryRecord',
+      name: 'deliveryRecord',
+      component: deliveryRecord
+
+    },
+    {
+      path: '/positionCollection',
+      name: 'positionCollection',
+      component: positionCollection
+    },
+    {
+      path: '/showEnt',
+      name: 'showEnt',
+      component: showEnt
+    },
+    {
+      path: '/showHR',
+      name: 'showHR',
+      component: showHR
     }
 
   ]
 })
+// router.beforeEach((to, from, next) => {
+//   if (to.path === '/showEnt' && from.path === '/showjob' && localStorage.getItem('lasterRouter') === to.path) {
+//     console.log(localStorage.getItem('lasterRouter'))
+//     next('/home')
+//   } else {
+//     localStorage.setItem('lasterRouter', from.path)
+//     next()
+//   }
+// })
+
+export default router
