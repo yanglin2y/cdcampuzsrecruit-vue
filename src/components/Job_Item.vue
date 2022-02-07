@@ -11,8 +11,8 @@
     <div class="ent">
            <el-avatar :size="34"
                      src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
-          <span>{{itemObj.entName}}&nbsp;&nbsp;&nbsp;&nbsp;{{itemObj.employeesNum}}</span>
     </div>
+     <div class="msg">{{itemObj.entName}}&nbsp;&nbsp;&nbsp;&nbsp;{{itemObj.employeesNum}}</div>
      <span class="salary">{{salaryList[0]}}K-{{salaryList[1]}}K</span>
   </div>
 </template>
@@ -41,19 +41,19 @@ export default {
 </script>
 
 <style scoped>
-.ent span{
-  margin-bottom: -0.8rem;
-
-}
 .ent{
   margin-top: 0.8rem;
-  margin-left: -12rem;
+  margin-left: 1.3rem;
+  float: left;
+}
+.msg{
+  float: left;
+  margin-top: 1.5rem;
 }
 .jobName{
   font-size: 1.3rem;
-  padding-right: 20.7rem;
-  padding-top: .5rem;
   font-weight: bold;
+  margin-left: 1.3rem;
   display: block;
 }
 .jobItems{
@@ -61,6 +61,7 @@ export default {
   height: 9rem;
   border-bottom: 3px solid #eeeeee;
   position: relative;
+  text-align: left;
   margin-top:0.4rem;
 }
 .areaUl{

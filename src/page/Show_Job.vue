@@ -1,6 +1,6 @@
 <!--  -->
 <template>
-  <div class="bigbox" v-cloak>
+  <div class="bigbox" v-cloak v-if="this.$route.params.itemObj!==null">
     <van-sticky :offset-top="0.0001" class="headerTitile">
       <van-nav-bar title="职位详细">
         <template #left>
@@ -81,6 +81,9 @@
     </template>
     </van-goods-action>
   </div>
+  <div v-else class="elsebox">
+    找不到该职位信息
+  </div>
 </template>
 
 <script>
@@ -131,6 +134,10 @@ export default {
   },
   created () {
     setTimeout(() => {
+      if (this.$route.params.itemObj === null) {
+        this.$notify({ color: 'grey', message: '该职位已经下架' })
+        this.$router.back()
+      }
       this.selectEnt()
       this.selectHr()
       this.jugCollection()
@@ -339,6 +346,11 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+.elsebox{
+  background: white;
+  width: 100%;
+  height: 100vh;
+}
 [v-cloak] {
     display: none;
 }
