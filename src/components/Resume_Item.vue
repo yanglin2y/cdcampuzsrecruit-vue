@@ -4,7 +4,7 @@
    <div class="img">
       <van-image width="55"
                  height="55"
-                 src="https://img01.yzcdn.cn/vant/cat.jpeg" />
+                 :src="this.itemObj.entImg" />
     </div>
     <div class="jobName">
       <span class="name1">{{this.itemObj.rpName}}</span>

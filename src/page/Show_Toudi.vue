@@ -18,7 +18,7 @@
           <div class="salary">{{salaryList[0]}}K-{{salaryList[1]}}K</div>
         </div>
         <div class="img">
-          <van-image width="55" height="55" src="https://img01.yzcdn.cn/vant/cat.jpeg" />
+          <van-image width="55" height="55" :src="this.$route.params.itemObj.entImg" />
         </div>
       </div>
     </div>

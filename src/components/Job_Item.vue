@@ -49,6 +49,7 @@ export default {
 .msg{
   float: left;
   margin-top: 1.5rem;
+  margin-left: 1rem;
 }
 .jobName{
   font-size: 1.3rem;
