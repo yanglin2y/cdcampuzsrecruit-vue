@@ -116,8 +116,8 @@ export default {
         salary: this.$route.params.itemObj.salary,
         experience: this.$route.params.itemObj.experience,
         entName: this.$route.params.itemObj.entName,
-        entImg: ''
-
+        entImg: this.$route.params.itemObj.entImg,
+        apEducation: localStorage.getItem('education')
       }
     }
   },
@@ -295,16 +295,20 @@ export default {
         })
     },
     getTime () {
-      var date1 = new Date()
-      var date = new Date(this.hr.lastLogin)
-      var date2 = date1.getTime() - date.getTime()
-      var days = Math.floor(date2 / (24 * 3600 * 1000))
-      if (days < 1) {
-        var leave1 = date2 % (24 * 3600 * 1000)
-        var hours = Math.floor(leave1 / (3600 * 1000))
+      var d2 = new Date()
+      var d1 = new Date(this.hr.lastLogin)
+      var date2 = d2.getTime() - d1.getTime()
+      var dayDiff = Math.floor(date2 / (24 * 3600 * 1000))// 计算出相差天数
+      var leave1 = date2 % (24 * 3600 * 1000) // 计算天数后剩余的毫秒数
+      var hours = Math.floor(leave1 / (3600 * 1000))// 计算出小时数
+      var leave2 = leave1 % (3600 * 1000) // 计算小时数后剩余的毫秒数
+      var minutes = Math.floor(leave2 / (60 * 1000))// 计算相差分钟数
+      if (dayDiff <= 0 && hours > 0) {
         this.time = hours + '小时之前'
-      } else {
-        this.time = days + '天之前'
+      } else if (dayDiff > 0) {
+        this.time = dayDiff + '天之前'
+      } else if (dayDiff <= 0 && hours <= 0) {
+        this.time = minutes + '分钟之前'
       }
     },
     // getState () {
@@ -454,11 +458,15 @@ button[disabled]{
   background: white;
   height: 100vh;
   width: 100%;
+
 }
 .content {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   margin-top: 1rem;
+  height: 85vh;
+  overflow-y:hidden ;
+  overflow: auto;
 }
 </style>

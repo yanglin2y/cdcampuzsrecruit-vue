@@ -111,7 +111,7 @@ export default {
                   message: '登陆成功',
                   type: 'success'
                 })
-                this.$router.push({ path: '/home' })
+                this.$router.push({ path: '/myInfo' })
               } else if (res.data.code === '111111') {
                 this.$message.error(res.data.message)
                 //   location.reload()

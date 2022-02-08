@@ -7,7 +7,7 @@
 
         <div class="imgdiv">
           <el-avatar :size="60"
-                     src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
+                     :src="userObject.apImg"></el-avatar>
         </div>
         <div class="namecss">{{userObject.apName}}</div>
         <div class="namecss2">{{sex}}/{{age}}/{{education}}</div>
@@ -50,6 +50,7 @@ export default {
   components: { mytabbar },
   data () {
     // 这里存放数据
+
     return {
       userObject: {},
       age: '',
@@ -153,12 +154,16 @@ export default {
 
       if (max === 1) {
         this.education = '专科'
+        localStorage.setItem('education', this.education)
       } else if (max === 2) {
         this.education = '本科'
+        localStorage.setItem('education', this.education)
       } else if (max === 3) {
         this.education = '硕士'
+        localStorage.setItem('education', this.education)
       } else if (max === 4) {
         this.education = '博士'
+        localStorage.setItem('education', this.education)
       }
       if (this.userObject.sex === 1) {
         this.sex = '男'

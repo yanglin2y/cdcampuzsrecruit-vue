@@ -10,7 +10,7 @@
     <br>
     <div class="ent">
            <el-avatar :size="34"
-                     src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
+                     :src="itemObj.entImg"></el-avatar>
     </div>
      <div class="msg">{{itemObj.entName}}&nbsp;&nbsp;&nbsp;&nbsp;{{itemObj.employeesNum}}</div>
      <span class="salary">{{salaryList[0]}}K-{{salaryList[1]}}K</span>

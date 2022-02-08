@@ -15,11 +15,13 @@
           <van-icon style="margin-left: 0.8rem" name="edit" @click="gotoPersonInfo()" />
         </div>
         <div class="namecss">{{sex}}/{{age}}岁/{{education}}</div>
+        <van-uploader :after-read="afterRead" >
         <el-avatar
           :size="60"
-          src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+          :src="userObject.apImg"
           class="img"
         ></el-avatar>
+        </van-uploader>
       </div>
       <van-divider />
       <div class="experience">
@@ -57,6 +59,31 @@ export default {
   props: ['userinfo'],
   components: {educationitem, ExperienceItem, ProjectItem},
   data () {
+    const afterRead = (file) => {
+      // 此时可以自行将文件上传至服务器
+      const params = new FormData()
+
+      params.append('files', file.file)
+      params.append('hrImg', this.userObject.hrImg)
+      let config = {
+        headers: {'Content-Type': 'multipart/form-data'}
+      }
+      this.axios
+        .post('/api/upload/img', params, config)
+        .then((res) => {
+          if (res.data.code === '000000') {
+            this.$notify({ type: 'success', message: '上传成功' })
+            setTimeout(() => {
+              this.$router.go(0)
+            }, 50)
+          } else if (res.data.code === '111111') {
+            this.$notify({ type: 'warning', message: res.data.message })
+          }
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    }
     return {
       edList: [],
       exList: [],
@@ -64,7 +91,8 @@ export default {
       education: '',
       userObject: {},
       age: '',
-      sex: ''
+      sex: '',
+      afterRead
     }
   },
   // 监听属性 类似于data概念
