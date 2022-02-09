@@ -113,6 +113,8 @@ export default {
           if (res.data.code === '000000') {
             this.userObject = res.data.data
             this.getAge(this.userObject.birthday)
+            localStorage.setItem('uid', this.userObject.uid)
+            localStorage.setItem('apImg', this.userObject.apImg)
           }
         })
         .catch(function (error) {
@@ -120,10 +122,10 @@ export default {
         })
     },
     goToOnlineResume () {
-      this.$router.push({ name: 'OnlineResume' })
+      this.$router.replace({ name: 'OnlineResume' })
     },
     goToCollection () {
-      this.$router.push({ name: 'positionCollection' })
+      this.$router.replace({ name: 'positionCollection' })
     },
     selectEducationInfoList () {
       this.axios

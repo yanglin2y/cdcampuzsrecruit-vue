@@ -142,10 +142,11 @@ button[disabled]{
 }
 .footer{
   position: fixed;
-  bottom: 0;
+  bottom: 2;
   width: 100%;
   line-height: var(--footer-height);
   text-align: center;
+  background: white;
 }
 .bigbox {
   background: white;

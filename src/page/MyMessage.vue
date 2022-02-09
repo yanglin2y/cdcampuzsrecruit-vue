@@ -3,18 +3,21 @@
   <div class="mymessagebody">
     <van-sticky :offset-top="0.0001" class="headerTitile">
       <van-nav-bar title="长大招聘" />
-      <van-tabs
+      <div class="minBox">
+  <van-tabs
         background="rgb(22, 167, 119) "
         color="rgb(22, 167, 119)"
         v-model="activeName"
       >
         <van-tab title-style="color:white;font-size:1.4rem" title="我的消息" name="message">
-            <message/>
+            <message></message>
         </van-tab>
         <van-tab title-style="color:white;font-size:1.4rem" title="我的投递" name="toudi">
           <toudi></toudi>
         </van-tab>
       </van-tabs>
+      </div>
+
          <mytabbar />
       </van-sticky>
 
@@ -34,7 +37,8 @@ export default {
   data () {
     // 这里存放数据
     return {
-      activeName: this.$store.state.activeName
+      activeName: this.$store.state.activeName,
+      itemObj: []
     }
   },
   // 监听属性 类似于data概念
@@ -48,7 +52,9 @@ export default {
     }
   },
   // 生命周期 - 创建完成（可以访问当前this实例）
-  created () {},
+  created () {
+
+  },
   // 生命周期 - 挂载完成（可以访问DOM元素）
   mounted () {},
   beforeCreate () {}, // 生命周期 - 创建之前
@@ -60,11 +66,15 @@ export default {
   activated () {}, // 如果页面有keep-alive缓存功能，这个函数会触发
   // 方法集合
   methods: {
-    onClick () {}
+
   }
 }
 </script>
 <style lang="less" scoped>
+.minBox{
+  border-radius: 1rem;
+  height:87vh;
+}
 /deep/ .van-tab .van-tab--active{
   color: black;
 }
@@ -75,7 +85,7 @@ export default {
   font-size: 2rem;
 }
 .mymessagebody {
-  height: 100%;
+  height: 100vh;
   width: 100%;
 }
 .van-nav-bar {

@@ -1,8 +1,8 @@
 <template>
   <van-tabbar route>
-    <van-tabbar-item replace to="/home" icon="home-o">职位</van-tabbar-item>
-    <van-tabbar-item replace to="/mymessage"  icon="chat-o">消息</van-tabbar-item>
-    <van-tabbar-item replace to="/myinfo"  icon="setting-o">我的</van-tabbar-item>
+    <van-tabbar-item replace to="/home" @click="toHome" icon="home-o">职位</van-tabbar-item>
+    <van-tabbar-item replace to="/mymessage" @click="tomymessage"  icon="chat-o">消息</van-tabbar-item>
+    <van-tabbar-item replace to="/myinfo" @click="toMyInfo"   icon="setting-o">我的</van-tabbar-item>
   </van-tabbar>
 </template>
 
@@ -41,7 +41,15 @@ export default {
   activated () { }, // 如果页面有keep-alive缓存功能，这个函数会触发
   // 方法集合
   methods: {
-
+    toMyInfo () {
+      this.$router.push('/myinfo')
+    },
+    tomymessage () {
+      this.$router.push('/mymessage')
+    },
+    toHome () {
+      this.$router.push('/home')
+    }
   }
 }
 

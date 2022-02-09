@@ -20,6 +20,7 @@ import positionCollection from '../page/Position_Collection.vue'
 import showEnt from '../page/Show_Ent.vue'
 import showHR from '../page/Show_Hr.vue'
 import search from '../page/Search.vue'
+import chat from '../page/Chat.vue'
 Vue.use(Router)
 
 const router = new Router({
@@ -126,6 +127,11 @@ const router = new Router({
       path: '/search',
       name: 'search',
       component: search
+    },
+    {
+      path: '/chat',
+      name: 'chat',
+      component: chat
     }
 
   ]

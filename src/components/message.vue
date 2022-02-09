@@ -1,20 +1,24 @@
 <!--  -->
 <template>
   <div class="bigBox">
+    <div style="height:.1rem"></div>
+      <messageitem  v-for="(n, inx) in itemObj" :key="inx" :itemObj="n"></messageitem>
   </div>
 </template>
 
 <script>
+import messageitem from './message_Item.vue'
 // 这里可以导入其他文件（比如：组件，工具js，第三方插件js，json文件，图片文件等等）
 // 例如：import 《组件名称》 from '《组件路径》'
 
 export default {
   // import引入的组件需要注入到对象中才能使用
-  components: {},
+  components: {messageitem},
   data () {
     // 这里存放数据
     return {
-      n: 1
+      n: 1,
+      itemObj: []
     }
   },
   // 监听属性 类似于data概念
@@ -23,7 +27,9 @@ export default {
   watch: {},
   // 生命周期 - 创建完成（可以访问当前this实例）
   created () {
-
+    setTimeout(() => {
+      this.getApRelation()
+    }, 300)
   },
   // 生命周期 - 挂载完成（可以访问DOM元素）
   mounted () {
@@ -38,7 +44,20 @@ export default {
   activated () { }, // 如果页面有keep-alive缓存功能，这个函数会触发
   // 方法集合
   methods: {
-
+    getApRelation () {
+      this.axios
+        .get('/api/relation/selectRelation')
+        .then((res) => {
+          if (res.data.code === '000000') {
+            this.itemObj = res.data.data
+            console.log(this.itemObj)
+          } else if (res.data.code === '111111') {
+          }
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    }
   }
 }
 
@@ -47,9 +66,10 @@ export default {
 //@import url(); 引入公共css类
 
 .bigBox {
-  height: 100vh;
+  height: 84.7vh;
   width: 100%;
   background: white;
   border-radius: 1rem;
+  overflow-y: auto;
 }
 </style>

@@ -81,6 +81,7 @@ export default {
   // 方法集合
   methods: {
     goto () {
+      // this.$router.replace('/mymessage')
       this.$router.back()
     },
     selectPostion () {

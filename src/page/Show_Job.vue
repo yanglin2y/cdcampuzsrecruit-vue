@@ -69,7 +69,7 @@
     <van-goods-action >
       <van-goods-action-icon icon="star-o"  text="收藏" @click="doCollection"  v-if="!btnDisabled2"/>
       <van-goods-action-icon icon="star" color="#FF9900" text="已收藏" @click="cancelCollection"  v-if="btnDisabled2"/>
-      <van-goods-action-button color="#3CB371" type="warning" text="立即沟通" />
+      <van-goods-action-button color="#3CB371" type="warning" text="立即沟通" @click="toChat" />
       <template  v-if="this.$route.params.itemObj.state===0">
        <van-goods-action-button color="#16a777" type="danger" text="已下线" @click="addResume" :disabled="true"></van-goods-action-button>
     </template>
@@ -147,14 +147,34 @@ export default {
   // 生命周期 - 挂载完成（可以访问DOM元素）
   mounted () {
   },
-  beforeMount () {}, // 生命周期 - 挂载之前
-  beforeUpdate () {}, // 生命周期 - 更新之前
-  updated () {}, // 生命周期 - 更新之后
-  beforeDestroy () {}, // 生命周期 - 销毁之前
-  destroyed () {}, // 生命周期 - 销毁完成
-  activated () {}, // 如果页面有keep-alive缓存功能，这个函数会触发
   // 方法集合
   methods: {
+    toChat () {
+      const params = new URLSearchParams()
+      params.append('hrid', this.hr.hrid)
+      params.append('hrImg', this.hr.hrImg)
+      params.append('hrName', this.hr.hrName)
+
+      this.axios
+        .post('/api/relation/addRelation', params)
+        .then((res) => {
+          if (res.data.code === '000000') {
+          } else if (res.data.code === '111111') {
+          }
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+      this.$router.replace({
+        name: 'chat',
+        params: {
+          hrid: this.hr.hrid,
+          hrImg: this.hr.hrImg,
+          hrName: this.hr.hrName,
+          itemObj: this.$route.params.itemObj
+        }
+      })
+    },
     goToEntInfo () {
       this.$router.push({
         name: 'showEnt',
@@ -165,7 +185,7 @@ export default {
       })
     },
     goToHrInfo () {
-      this.$router.push({
+      this.$router.replace({
         name: 'showHR',
         params: {
           itemObj: this.hr,
