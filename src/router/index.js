@@ -21,6 +21,7 @@ import showEnt from '../page/Show_Ent.vue'
 import showHR from '../page/Show_Hr.vue'
 import search from '../page/Search.vue'
 import chat from '../page/Chat.vue'
+import updataPass from '../page/UpdataPass.vue'
 Vue.use(Router)
 
 const router = new Router({
@@ -132,6 +133,11 @@ const router = new Router({
       path: '/chat',
       name: 'chat',
       component: chat
+    }, {
+      path: '/updataPass',
+      name: 'updataPass',
+      component: updataPass
+
     }
 
   ]

@@ -11,10 +11,6 @@
         background="rgb(22, 167, 119) "
       />
       <div class="qiuzhi">
-        <div class="qicon1">
-          <van-icon name="diamond" size="1.8rem" />
-          <div>职位推荐</div>
-        </div>
         <div class="qicon2">
           <van-icon name="cart" size="1.8rem" />
           <div @click="goToCollection">职位收藏</div>
@@ -26,6 +22,10 @@
         <div class="qicon2" @click="seviceInfo()">
           <van-icon name="label" size="1.8rem" />
           <div>服务公告</div>
+        </div>
+        <div class="qicon1" @click="gomessage">
+          <van-icon name="diamond" size="1.8rem" />
+          <div>在线聊天</div>
         </div>
       </div>
     </van-sticky>
@@ -77,6 +77,9 @@ export default {
   mounted () {},
   // 方法集合
   methods: {
+    gomessage () {
+      this.$router.push('/mymessage')
+    },
     gotoSearch () {
       this.$router.push('/search')
     },

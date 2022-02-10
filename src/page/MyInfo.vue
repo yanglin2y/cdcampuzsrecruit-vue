@@ -29,10 +29,10 @@
                     size="2.5rem" />
           <div @click="goToDeliveryRecord">投递记录</div>
         </div>
-          <div class="qicon2">
-          <van-icon name="chat-o"
+        <div class="qicon2" @click="goPass">
+          <van-icon name="setting-o"
                     size="2.5rem" />
-          <div>意见反馈</div>
+          <div>修改密码</div>
         </div>
       </div>
     </div>
@@ -87,6 +87,9 @@ export default {
   activated () { }, // 如果页面有keep-alive缓存功能，这个函数会触发
   // 方法集合
   methods: {
+    goPass () {
+      this.$router.replace('/updataPass')
+    },
     logout () {
       this.axios
         .get('/api/user/logout')
