@@ -88,7 +88,7 @@ export default {
   // 方法集合
   methods: {
     goPass () {
-      this.$router.replace('/updataPass')
+      this.$router.push('/updataPass')
     },
     logout () {
       this.axios
